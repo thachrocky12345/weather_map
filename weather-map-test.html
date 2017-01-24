@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="js/jquery.3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/leaflet.1.0.2.min.js"></script>
 	<script type="text/javascript" src="js/leaflet.draw.0.4.9.min.js"></script>
+	<script type="text/javascript" src="js/leaflet.circle.topolygon.1.0.0.min.js"></script>
 	<script type="text/javascript">
 		
 		var aerialLayer = null;
@@ -132,10 +133,43 @@
 			map.on(L.Draw.Event.CREATED, function (e) {
 				var type = e.layerType;
 				var layer = e.layer;
-
-				var layerGeojson = layer.toGeoJSON();
+				var layerGeojson = null;
 				
-				console.debug('Drawing geojson: ', JSON.stringify(layerGeojson)); // Debug
+				// For circle drawings
+				if (type.toLowerCase() == 'circle') {
+				
+					var circle = L.circle([e.layer._latlng.lat, e.layer._latlng.lng], {
+						color: 'rgba(255, 255, 255, 0)',
+						fillColor: '#F03',
+						fillOpacity: 0.0,
+						radius: 1000000//e.layer.options.radius
+					}).addTo(map);
+				
+					var circlePolygon = L.Circle.toPolygon(circle, 30, map);
+					
+					layerGeojson = {
+						type: 'Feature',
+						geometry: {
+							coordinates: [[]],
+							type: 'Polygon'
+						},
+						properties: {}
+					};
+					
+					for (var i = 0; i < circlePolygon.length; i++)
+						layerGeojson.geometry.coordinates[0].push([circlePolygon[i].lng, circlePolygon[i].lat]);
+						
+					// Push first point again to end to complete ring
+					layerGeojson.geometry.coordinates[0].push([circlePolygon[0].lng, circlePolygon[0].lat]);
+					
+				// For all other drawings
+				} else {
+				
+					layerGeojson = layer.toGeoJSON();
+				}
+				
+				//console.debug('Drawing geojson: ', layerGeojson); // Debug for JSON object
+				console.debug('Drawing geojson: ', JSON.stringify(layerGeojson)); // Debug for stringified JSON object
 				
 				editableLayers.addLayer(layer);
 				
@@ -147,8 +181,8 @@
 					url: 'http://apiurlhere.com/method',
 					data: postData,
 					cache: false,
-					success: function(data){
-						console.log('Successfully posted data');
+					success: function (data) {
+						//console.log('Successfully posted data');
 					}
 				});
 			});
