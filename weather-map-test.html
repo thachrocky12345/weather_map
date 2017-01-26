@@ -142,10 +142,10 @@
 						color: 'rgba(255, 255, 255, 0)',
 						fillColor: '#F03',
 						fillOpacity: 0.0,
-						radius: 1000000//e.layer.options.radius
+						radius: e.layer.options.radius
 					}).addTo(map);
 				
-					var circlePolygon = L.Circle.toPolygon(circle, 30, map);
+					var circlePolygon = L.Circle.toPolygon(circle, 70, map);
 					
 					layerGeojson = {
 						type: 'Feature',
