@@ -52,13 +52,26 @@
 				'Street View': streetLayer
 			}).addTo(map);
 
+			addGeoserverLayer();
+
 			initializeUSStateLayer();
 			
 			initializeDrawControls();
 
 			initializeDrawActions();
 		}
-		
+
+		function addGeoserverLayer() {
+
+			var geoserverLayer =
+				L.tileLayer.wms('https://urldefense.proofpoint.com/v2/url?u=http-3A__localhost-3A8080_geoserver_tiger_wms&d=DQIDaQ&c=euGZstcaTDllvimEN8b7jXrwqOf-v5A_CdpgnVfiiMM&r=npws9P6ceYjSiCQmVC49fB9HwzAyTN_N-ugt9l2sYcc&m=RGWDLCelyMse8O4UVhTivUcZ8A8nRzl5XwfIfusCAno&s=l4JVAxqCGWVIGLmcUpPhW4eGnuMc3HvRHw7Hd9yJdTw&e= ', {
+				   layers: 'tiger:tiger_roads',
+				   format: 'image/png',
+				   attribution: '',
+				   transparent: true
+				 }).addTo(map);
+		}
+
 		function initializeUSStateLayer() {
 		
 			var usStatesSampleGeojson = {
