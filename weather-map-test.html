@@ -169,17 +169,17 @@
 				}
 				
 				//console.debug('Drawing geojson: ', layerGeojson); // Debug for JSON object
-				console.debug('Drawing geojson: ', JSON.stringify(layerGeojson)); // Debug for stringified JSON object
+				console.debug('Drawing geojson: ', JSON.stringify(layerGeojson.geometry)); // Debug for stringified JSON object
 				
 				editableLayers.addLayer(layer);
 				
-				var postData = {
-					geojson: layerGeojson
-				};
+				//var postData = {
+				//	content: layerGeojson.geometry
+				//};
 				$.ajax({
 					type: 'POST',
-					url: 'http://apiurlhere.com/method',
-					data: postData,
+					url: 'http://localhost:55000',
+					data: JSON.stringify(layerGeojson.geometry),
 					cache: false,
 					success: function (data) {
 						//console.log('Successfully posted data');
