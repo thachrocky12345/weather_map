@@ -64,6 +64,11 @@
 			var url1 = 'localhost:8080/geoserver/Test/wms';
 			var countiesLayer =
 				L.tileLayer.wms(url1, {
+		function addGeoserverLayer() {
+
+			var url = 'http://10.63.192.209:8080/geoserver/Test/wms';
+			var geoserverLayer =
+				L.tileLayer.wms(url, {
 				   layers: 'Test:field_just_created',
 				   format: 'image/png',
 				   attribution: '',
@@ -172,7 +177,7 @@
 				//};
 				$.ajax({
 					type: 'POST',
-					url: 'http://localhost:55000',
+					url: 'http://localhost:5698',
 					data: JSON.stringify(layerGeojson.geometry),
 					cache: false,
 					success: function (data) {
