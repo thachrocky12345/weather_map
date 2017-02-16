@@ -70,13 +70,23 @@
                     transparent: true
                 }).addTo(map);
 
-            var url2 = 'http://10.63.192.209:8080/geoserver/Test/wms';
-            var weatherLayer =
-                L.tileLayer.wms(url2, {
-                    layers: 'Test:weather_station',
+//            var url2 = 'http://10.63.192.209:8080/geoserver/Test/wms';
+//            var weatherLayer =
+//                L.tileLayer.wms(url2, {
+//                    layers: 'Test:weather_station',
+//                    format: 'image/png',
+//                    attribution: '',
+//                    transparent: true
+//                }).addTo(map);
+
+            var url3 = 'http://10.63.192.209:8080/geoserver/Test/wms';
+            var rainingLayer =
+                L.tileLayer.wms(url3, {
+                    layers: 'Test:raining_station',
                     format: 'image/png',
                     attribution: '',
                     transparent: true
+
                 }).addTo(map);
         }
 
@@ -92,7 +102,7 @@
 					polygon: {
 						allowIntersection: false,
 						drawError: {
-							color: '#FF3300',
+							color: '#77ff4f',
 							message: '<strong> Draw Error <strong>'
 						},
 						shapeOptions: {
@@ -164,7 +174,8 @@
 				
 				//console.debug('Drawing geojson: ', layerGeojson); // Debug for JSON object
 				console.debug('Drawing geojson: ', JSON.stringify(layerGeojson.geometry)); // Debug for stringified JSON object
-				
+
+				editableLayers.clearLayers();
 				editableLayers.addLayer(layer);
 				
 				//var postData = {
@@ -172,7 +183,7 @@
 				//};
 				$.ajax({
 					type: 'POST',
-					url: 'http://localhost:55000',
+					url: 'http://10.63.192.147:55000',
 					data: JSON.stringify(layerGeojson.geometry),
 					cache: false,
 					success: function (data) {
