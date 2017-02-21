@@ -61,32 +61,38 @@
 
 		function addGeoserverLayers() {
 
-            var url1 = 'http://10.63.192.209:8080/geoserver/Test/wms';
+            var url = 'http://10.63.192.209:8080/geoserver/Test/wms';
+
             var countiesLayer =
-                L.tileLayer.wms(url1, {
+                L.tileLayer.wms(url, {
                     layers: 'Test:field_just_created',
                     format: 'image/png',
                     attribution: '',
                     transparent: true
                 }).addTo(map);
 
-//            var url2 = 'http://10.63.192.209:8080/geoserver/Test/wms';
-//            var weatherLayer =
-//                L.tileLayer.wms(url2, {
-//                    layers: 'Test:weather_station',
-//                    format: 'image/png',
-//                    attribution: '',
-//                    transparent: true
-//                }).addTo(map);
+            var weatherLayer =
+                L.tileLayer.wms(url, {
+                    layers: 'Test:weather_station',
+                    format: 'image/png',
+                    attribution: '',
+                    transparent: true
+                }).addTo(map);
 
-            var url3 = 'http://10.63.192.209:8080/geoserver/Test/wms';
             var rainingLayer =
-                L.tileLayer.wms(url3, {
+                L.tileLayer.wms(url, {
                     layers: 'Test:raining_station',
                     format: 'image/png',
                     attribution: '',
                     transparent: true
+                }).addTo(map);
 
+            var cluLayer =
+                L.tileLayer.wms(url, {
+                    layers: 'Test:CLU',
+                    format: 'image/png',
+                    attribution: '',
+                    transparent: true
                 }).addTo(map);
         }
 
